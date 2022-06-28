@@ -16,13 +16,13 @@ jobs:
 
     # Build image
     - name: Build Docker image with release tag
-      run: docker build . -f Dockerfile -t alpine-ruby:${{steps.release.outputs.tag}}
+      run: docker build . -f Dockerfile -t alpine-rails:${{steps.release.outputs.tag}}
 
     # Tag image for publishing
     - name: Build Docker image latest
       run: |
-        docker tag alpine-ruby:${{steps.release.outputs.tag}} phr0ze/alpine-ruby:${{steps.release.outputs.tag}}
-        docker tag alpine-ruby:${{steps.release.outputs.tag}} phr0ze/alpine-ruby:latest
+        docker tag alpine-rails:${{steps.release.outputs.tag}} phr0ze/alpine-rails:${{steps.release.outputs.tag}}
+        docker tag alpine-rails:${{steps.release.outputs.tag}} phr0ze/alpine-rails:latest
 
     # Login to DockerHub
     - name: Login to DockerHub
@@ -31,5 +31,5 @@ jobs:
     # Publish image
     - name: Publish Docker image with release tag and latest
       run: |
-        docker push phr0ze/alpine-ruby:${{steps.release.outputs.tag}}
-        docker push phr0ze/alpine-ruby:latest
+        docker push phr0ze/alpine-rails:${{steps.release.outputs.tag}}
+        docker push phr0ze/alpine-rails:latest
