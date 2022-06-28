@@ -1,0 +1,35 @@
+name: Publish Docker Image
+on:
+  release:
+    types: [published]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+
+    # Set release tag
+    - name: Set the release tag
+      id: release
+      run: echo ::set-output name=tag::$(basename "${GITHUB_REF}")
+
+    # Build image
+    - name: Build Docker image with release tag
+      run: docker build . -f Dockerfile -t alpine-ruby:${{steps.release.outputs.tag}}
+
+    # Tag image for publishing
+    - name: Build Docker image latest
+      run: |
+        docker tag alpine-ruby:${{steps.release.outputs.tag}} phr0ze/alpine-ruby:${{steps.release.outputs.tag}}
+        docker tag alpine-ruby:${{steps.release.outputs.tag}} phr0ze/alpine-ruby:latest
+
+    # Login to DockerHub
+    - name: Login to DockerHub
+      run: echo ${{secrets.DOCKERHUB_PASS}} | docker login -u ${{secrets.DOCKERHUB_USER}} --password-stdin
+
+    # Publish image
+    - name: Publish Docker image with release tag and latest
+      run: |
+        docker push phr0ze/alpine-ruby:${{steps.release.outputs.tag}}
+        docker push phr0ze/alpine-ruby:latest
