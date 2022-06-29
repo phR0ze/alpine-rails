@@ -29,6 +29,8 @@ RUN \
 # Configure bash
 COPY config/* /root/
 
+WORKDIR /usr/src/app
+
 # Configure ONBUILD app instructions to be inserted after
 # the FROM of a Dockerfile based on this one
 ONBUILD WORKDIR /usr/src/app
