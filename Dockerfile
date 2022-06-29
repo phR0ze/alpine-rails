@@ -1,7 +1,13 @@
 FROM ruby:3.1.2-alpine3.16
 
+ARG USER=rails
+ARG GROUP=rails
+ARG USER_ID=1000
+ARG GROUP_ID=1000
+
+COPY config/* /root/
 RUN \
-  echo ">> Bash install" && \
+  echo ">> Bash environment" && \
     apk add --no-cache \
       bash \
       bash-completion \
@@ -11,7 +17,7 @@ RUN \
     apk add --no-cache --virtual \
       build-dependencies \
       build-base && \
-  echo ">> Rails install" && \
+  echo ">> Rails dependecies" && \
     apk add --no-cache \
       ruby-dev \
       ruby-json \
@@ -21,15 +27,19 @@ RUN \
       tzdata \
       yaml \
       yaml-dev \
-      yarn && \
+      yarn
+
+# Configure rails environment
+WORKDIR /usr/src/app
+RUN echo ">> Rails user config" && \
+  addgroup -g ${GROUP_ID} ${GROUP} && \
+  adduser -S -D -u ${USER_ID} -G ${GROUP} ${USER}
+USER ${USER_ID}
+COPY config/* /home/${USER}/
+RUN echo ">> Rails environment" && \
     gem install rails && \
     gem install bundler && \
     gem update
-
-# Configure bash
-COPY config/* /root/
-
-WORKDIR /usr/src/app
 
 # Configure ONBUILD app instructions to be inserted after
 # the FROM of a Dockerfile based on this one
