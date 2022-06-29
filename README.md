@@ -11,8 +11,8 @@ expecting it to or any other local dev issue.
 
 **Docker Image Size: 400 MB**
 
-## Build
-This image is intended to be depended upon by Rails apps. A app developer would write a Dockerfile 
+# Build
+This image is intended to be depended upon by Rails apps. An app developer would write a Dockerfile 
 calling out `FROM phr0ze/alpine-rails:3.16` and the `ONBUILD` commands from this base image would 
 `COPY Gemfile /usr/src/app` and run `bundle install`.
 
@@ -25,19 +25,24 @@ calling out `FROM phr0ze/alpine-rails:3.16` and the `ONBUILD` commands from this
    $ docker build -t new-rails-app .
    ```
 
-## Run
+# Run
 
-### Run Rails app
+## Run Rails app
+1. Run the app source in its custom image built above:
+   ```bash
+   $ docker run --rm -v $(pwd):/usr/src/app -p 3000:3000 new-rails-app
+   ```
+2. Navigate in a browser to `http://127.0.0.1:3000`
 
-### Run interactive shell
+## Run interactive shell
 ```bash
 $ docker run --rm -it phr0ze/alpine-rails bash
 ```
 
-## Packages
+# Packages
 Package details can be found with [Alpine's Package page](https://pkgs.alpinelinux.org/packages)
 
-### Bash environment
+## Bash environment
 | Package                   | Description
 | ------------------------- | ------------------------------------------
 | `bash`                    | The GNU Bourne Again shell
@@ -45,7 +50,7 @@ Package details can be found with [Alpine's Package page](https://pkgs.alpinelin
 | `ca-certificates`         | Common CA certificates PEM files
 | `curl`                    | URL retrival utility and library
 
-### Rails environment
+## Rails environment
 | Package                   | Description
 | ------------------------- | ------------------------------------------
 | `build-base`              | Meta package for build base tooling for rails
@@ -60,10 +65,11 @@ Package details can be found with [Alpine's Package page](https://pkgs.alpinelin
 | `yaml-dev`                | YAML 1.1 parser and emitter written in C (development files)
 | `yarn`                    | Fast, reliable, and secure dependency management for Node.js
 
-## Configuration
+# Configuration
 * .bashrc
 * .dircolors
 
+# Development
 ## Update in DockerHub
 
 ### Update with Actions
