@@ -4,6 +4,7 @@ ARG USER=rails
 ARG GROUP=rails
 ARG USER_ID=1000
 ARG GROUP_ID=1000
+ARG APP_DIR=/usr/src/app
 
 COPY config/* /root/
 RUN \
@@ -30,7 +31,7 @@ RUN \
       yarn
 
 # Configure rails environment
-WORKDIR /usr/src/app
+WORKDIR ${APP_DIR}
 RUN echo ">> Rails user config" && \
   addgroup -g ${GROUP_ID} ${GROUP} && \
   adduser -S -D -u ${USER_ID} -G ${GROUP} ${USER}
@@ -43,8 +44,9 @@ RUN echo ">> Rails environment" && \
 
 # Configure ONBUILD app instructions to be inserted after
 # the FROM of a Dockerfile based on this one
-ONBUILD WORKDIR /usr/src/app
-ONBUILD COPY Gemfile /usr/src/app
+ONBUILD WORKDIR ${APP_DIR}
+ONBUILD USER ${USER_ID}
+ONBUILD COPY Gemfile ${APP_DIR}
 ONBUILD EXPOSE 3000
 ONBUILD RUN bundle install
 
