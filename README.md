@@ -39,17 +39,26 @@ Package details can be found with [Alpine's Package page](https://pkgs.alpinelin
 
 ### Bash environment
 | Package                   | Description
-| ------------------------- |  ------------------------------------------
+| ------------------------- | ------------------------------------------
 | `bash`                    | The GNU Bourne Again shell
 | `bash-completion`         | Command-line tab-completion for bash
 | `ca-certificates`         | Common CA certificates PEM files
 | `curl`                    | URL retrival utility and library
 
-### Bash environment
+### Rails environment
 | Package                   | Description
-| ------------------------- |  ------------------------------------------
-| `bash`                    | The GNU Bourne Again shell
-| `bash-completion`         | Command-line tab-completion for bash
+| ------------------------- | ------------------------------------------
+| `build-base`              | Meta package for build base tooling for rails
+| `build-dependencies`      | Meta package for build base tooling for rails
+| `ruby-dev`                | An object-oriented language for quick and easy programming (development files)
+| `ruby-json`               | Ruby JSON library
+| `nodejs`                  | JavaScript runtime built on V8 engine - LTS version
+| `sqlite`                  | C library that implements an SQL database engine
+| `sqlite-dev`              | C library that implements an SQL database engine (development files)
+| `tzdata`                  | Timezone data
+| `yaml`                    | YAML 1.1 parser and emitter written in C
+| `yaml-dev`                | YAML 1.1 parser and emitter written in C (development files)
+| `yarn`                    | Fast, reliable, and secure dependency management for Node.js
 
 ## Configuration
 * .bashrc
