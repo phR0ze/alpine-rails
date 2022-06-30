@@ -28,7 +28,8 @@ RUN \
 WORKDIR /usr/src/app
 RUN echo ">> Rails user config" && \
   addgroup -g 1000 rails && \
-  adduser -S -D -u 1000 -G rails rails
+  adduser -S -D -u 1000 -G rails rails && \
+  chown rails: /usr/src/app
 USER 1000
 COPY config/* /home/rails/
 RUN echo ">> Rails environment" && \
